@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { } from './themes/default';
 
 export default createGlobalStyle`
 *{
