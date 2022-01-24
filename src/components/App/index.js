@@ -3,6 +3,7 @@ import GlobalSyles from '../../assets/styles/global';
 import defaultTheme from '../../assets/styles/themes/default';
 import { Container } from './styles';
 import Header from '../Header';
+import ChampionshipList from '../ChampionshipList';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <GlobalSyles />
       <Container>
         <Header />
+        <ChampionshipList />
       </Container>
     </ThemeProvider>
   );
