@@ -28,3 +28,24 @@ export const Header = styled.header`
     }
   }
 `;
+
+export const ListContainer = styled.div`
+  margin-bottom:8px;
+  margin-top:24px;
+
+
+  .sort-button{
+    background:transparent;
+    border:none;
+    display:flex;
+    align-items:center;
+
+    span{
+      margin-right:8px;
+      font-weight:bold;
+      color:${({ theme }) => theme.colors.primary.main}
+    }
+  }
+`;
+
+export const Card = styled.div``;
