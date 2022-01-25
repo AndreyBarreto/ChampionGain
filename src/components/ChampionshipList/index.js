@@ -17,7 +17,7 @@ export default function ChampionshipList() {
         </button>
       </ListContainer>
       <Card>
-        oioi
+        Futebol
       </Card>
     </Container>
   );

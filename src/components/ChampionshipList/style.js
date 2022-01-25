@@ -48,4 +48,8 @@ export const ListContainer = styled.div`
   }
 `;
 
-export const Card = styled.div``;
+export const Card = styled.div`
+  background:#fff;
+  box-shadow:0px 4px 10px rgba(0,0,0,0.04);
+  padding:16px;
+  border-radius:4px;`;
