@@ -1,19 +1,22 @@
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 import GlobalSyles from '../../assets/styles/global';
 import defaultTheme from '../../assets/styles/themes/default';
 import { Container } from './styles';
 import Header from '../Header';
-import ChampionshipList from '../ChampionshipList';
+import Routes from '../../routes';
 
 function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalSyles />
-      <Container>
-        <Header />
-        <ChampionshipList />
-      </Container>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={defaultTheme}>
+        <GlobalSyles />
+        <Container>
+          <Header />
+          <Routes />
+        </Container>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
