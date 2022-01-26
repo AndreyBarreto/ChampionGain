@@ -5,9 +5,6 @@ export default function Header() {
     <Container>
       <span>Champion</span>
       <span style={{ color: '#5061FC' }}>Gain</span>
-      <InputSearchContainer>
-        <input type="text" placeholder="Pesquise pelo Campeonato..." />
-      </InputSearchContainer>
     </Container>
 
   );

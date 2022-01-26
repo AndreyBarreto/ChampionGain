@@ -1,3 +1,3 @@
 export default function EditContact() {
-    return 'EditContact'
+    return 'EditContact';
 }
