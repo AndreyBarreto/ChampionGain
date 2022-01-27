@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Container } from "./style"
+import { Container } from "./styles"
 import arrow from '../../assets/images/icons/arrow.svg'
 
 export default function PageHeader({ title }) {
