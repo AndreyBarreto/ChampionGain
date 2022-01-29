@@ -12,7 +12,7 @@ export const Overlay = styled.div`
     align-items:center;
     justify-content:center;
 
-    
+
     `
 
 export const Container = styled.div`
@@ -25,13 +25,16 @@ export const Container = styled.div`
 
     h1{
         font-size:22px;
+        color:${({ theme, danger }) => (
+    danger ? theme.colors.danger.main : theme.colors.gray[900]
+  )}
     }
 
     p{
         margin-top:8px;
     }
 `
-export const Footer =styled.footer`
+export const Footer = styled.footer`
     margin-top:22px;
     display:flex;
     align-items:center;
@@ -43,6 +46,6 @@ export const Footer =styled.footer`
         border:none;
         font-size:16px;
         margin-right:8px;
-        color:${({theme})=> theme.colors.gray[200]}
+        color:${({ theme }) => theme.colors.gray[200]}
     }
     `
