@@ -16,7 +16,7 @@ import Loader from '../../components/Loader';
 export default function Home() {
   return (
     <Container>
-      <Loader/>
+      {/* <Loader/> */}
       {/* <Moldal danger /> */}
       <InputSearchContainer>
         <input type="text" placeholder="Pesquise pelo Campeonato..." />
