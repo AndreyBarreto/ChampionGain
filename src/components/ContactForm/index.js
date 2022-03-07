@@ -32,11 +32,15 @@ export default function ContactForm({ buttonLabel }) {
   function handleEmailChange(event) {
     setEmail(event.target.value)
 
-    if (event.target.value) {
-      console.log('error')
+    if (event.target.value && !isEmailValid(event.target.value)) {
+      const errorAlreadyExist = errors.find((error) => error.field === 'email')
+      if (errorAlreadyExist) {
+        return
+      }
+      setErrors((prevState) => [...prevState, { field: "email", message: "E-mail inválido" }])
     }
     else {
-      console.log('remove erro do e-mail')
+      setErrors((prevState) => prevState.filter((error) => error.field !== 'email'))
     }
   }
 
