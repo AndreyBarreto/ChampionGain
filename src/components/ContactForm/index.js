@@ -11,7 +11,7 @@ export default function ContactForm({ buttonLabel }) {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [category, setCategory] = useState('')
-  const [, setErrors] = useState([])
+  const [errors, setErrors] = useState([])
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -44,24 +44,30 @@ export default function ContactForm({ buttonLabel }) {
     }
   }
 
+  function getErrorMessageByFieldName(fieldname) {
+    return errors.find((error) => error.field === fieldname)?.message
+  }
+
   return (
     <Form onSubmit={handleSubmit}>
-      <FormGroup error="O formato do e-mail é inválido">
+      <FormGroup error={getErrorMessageByFieldName('name')}>
         <Input
+          error={getErrorMessageByFieldName('name')}
           placeholder='Nome'
-          error
           value={name}
           onChange={handleNameChange}
         />
       </FormGroup>
-      <FormGroup>
+      <FormGroup error={getErrorMessageByFieldName('email')}>
         <Input
+          error={getErrorMessageByFieldName('email')}
           placeholder='E-mail'
           value={email}
           onChange={handleEmailChange} />
       </FormGroup>
       <FormGroup>
         <Input
+
           placeholder='Telefone'
           value={phone}
           onChange={(event) => setPhone(event.target.value)} />
