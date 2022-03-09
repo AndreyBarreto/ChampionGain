@@ -12,6 +12,7 @@ export default styled.select`
   font-size: 16px;
   border:2px solid #fff;
   transition: border-color 0.4s ease-in;
+  appearance:none;
 
 
   &:focus{

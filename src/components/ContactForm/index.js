@@ -12,7 +12,6 @@ export default function ContactForm({ buttonLabel }) {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [category, setCategory] = useState('')
-  const [errors, setErrors] = useState([])
 
   const { setError, removeError, getErrorMessageByFieldName } = useErrors()
 
