@@ -51,9 +51,8 @@ export const InputSearchContainer = styled.div`
   }
 `;
 
-export const ListContainer = styled.div`
+export const ListHeader = styled.header`
   margin-top:24px;
-  
   
   .sort-button{
     margin-bottom:8px;
@@ -66,6 +65,11 @@ export const ListContainer = styled.div`
       margin-right:8px;
       font-weight:bold;
       color:${({ theme }) => theme.colors.primary.main}
+    }
+    img {
+      transform:${({ orderBy }) => orderBy === 'asc' ? 'rotate(180deg)' : 'rotate(0deg)'};
+      transition: transform 0.2s ease-in;
+
     }
   }
 `;
