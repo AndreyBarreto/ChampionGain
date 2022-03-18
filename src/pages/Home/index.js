@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 // import Moldal from '../../components/Modal';
 import Loader from '../../components/Loader';
-import { delay } from '../../utils';
+import ContactsService from '../../services/ContactsService';
 
 
 export default function Home() {
@@ -32,11 +32,9 @@ export default function Home() {
       try {
         setIsLoading(true)
 
-        const response = await fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
+        const contactsList = await ContactsService.listContacts(orderBy)
 
-        await delay(2000)
-        const json = await response.json();
-        setContacts(json)
+        setContacts(contactsList)
       }
       catch (error) {
         console.log(error)
