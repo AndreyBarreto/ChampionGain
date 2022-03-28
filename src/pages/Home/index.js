@@ -3,23 +3,27 @@ import {
   Header,
   ListHeader,
   Card,
+  ErrorContainer
 } from './style';
 import { InputSearchContainer } from './style';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
+import sad from '../../assets/images/icons/sad.svg'
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useMemo } from 'react';
 // import Moldal from '../../components/Modal';
 import Loader from '../../components/Loader';
 import ContactsService from '../../services/ContactsService';
 import APIError from '../../errors/APIError';
+import Button from '../../components/Button'
 
 export default function Home() {
   const [contacts, setContacts] = useState([])
   const [orderBy, setOrderBy] = useState('asc')
   const [searchTerm, setSearchTerm] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
 
 
   const filteredContacts = useMemo(() => (contacts.filter((contact) => (
@@ -38,7 +42,7 @@ export default function Home() {
       }
       catch (error) {
         console.log(error instanceof APIError)
-        console.log(error)
+        setHasError(true)
       }
       finally {
         setIsLoading(false)
@@ -67,9 +71,9 @@ export default function Home() {
           placeholder="Pesquise pelo Campeonato..."
           onChange={handleChangeSearchTerm} />
       </InputSearchContainer>
-      <Header>
+      <Header hasError={hasError}>
 
-        {<strong>
+        {!hasError && <strong>
           {filteredContacts.length}
           {filteredContacts.length == 1 ? ' Campeonato' : ' Campeonatos'}
         </strong>}
@@ -82,6 +86,18 @@ export default function Home() {
             <img src={arrow} alt="arrow" />
           </button>
         </ListHeader>)}
+
+
+      {hasError && (
+        <ErrorContainer>
+          <img src={sad} alt='sad' />
+          <div className='details'>
+            <strong>Ocorreu um erro ao obter os seus contatos!</strong>
+            <Button type='button'>
+              Tentar novamente
+            </Button>
+          </div>
+        </ErrorContainer>)}
 
       {filteredContacts.map((contact) => (
         <Card key={contact.id}>
