@@ -13,7 +13,7 @@ import { useEffect, useState, useMemo } from 'react';
 // import Moldal from '../../components/Modal';
 import Loader from '../../components/Loader';
 import ContactsService from '../../services/ContactsService';
-
+import APIError from '../../errors/APIError';
 
 export default function Home() {
   const [contacts, setContacts] = useState([])
@@ -37,6 +37,7 @@ export default function Home() {
         setContacts(contactsList)
       }
       catch (error) {
+        console.log(error instanceof APIError)
         console.log(error)
       }
       finally {
