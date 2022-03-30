@@ -11,7 +11,7 @@ import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import sad from '../../assets/images/icons/sad.svg'
 import { Link } from 'react-router-dom';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 // import Moldal from '../../components/Modal';
 import Loader from '../../components/Loader';
 import ContactsService from '../../services/ContactsService';
@@ -31,7 +31,7 @@ export default function Home() {
   ))
   ), [contacts, searchTerm])
 
-  async function loadContacts() {
+  const loadContacts = useCallback(async () => {
     try {
       setIsLoading(true)
 
@@ -48,12 +48,12 @@ export default function Home() {
     finally {
       setIsLoading(false)
     }
-  }
+  }, [orderBy])
   useEffect(() => {
 
     loadContacts()
     return () => console.log('Componente se desmanchou')
-  }, [orderBy])
+  }, [loadContacts])
 
   function handleToggleOrderBy() {
     setOrderBy((prevState) => prevState == 'asc' ? 'desc' : 'asc')
