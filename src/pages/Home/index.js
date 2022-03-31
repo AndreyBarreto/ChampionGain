@@ -4,7 +4,8 @@ import {
   ListHeader,
   Card,
   ErrorContainer,
-  EmptyListContainer
+  EmptyListContainer,
+  SearchNotFoundContainer
 } from './style';
 import { InputSearchContainer } from './style';
 import arrow from '../../assets/images/icons/arrow.svg';
@@ -12,6 +13,7 @@ import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import sad from '../../assets/images/icons/sad.svg'
 import emptyBox from '../../assets/images/icons/empty-box.svg'
+import magnifierQuestion from '../../assets/images/icons/magnifier-question.svg'
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 // import Moldal from '../../components/Modal';
@@ -113,6 +115,16 @@ export default function Home() {
               </p>
             </EmptyListContainer>)
           }
+          {
+            (contacts.length > 0 && filteredContacts.length < 1) &&
+            < SearchNotFoundContainer >
+              <img src={magnifierQuestion} />
+              <span>
+                Nenhum resultado foi encontrado para
+                <strong>”{searchTerm}”.</strong>
+              </span>
+            </SearchNotFoundContainer>
+          }
           {filteredContacts.length > 0 && (
             <ListHeader orderBy={orderBy}>
               <button type="button" className="sort-button" onClick={handleToggleOrderBy}>
@@ -141,20 +153,23 @@ export default function Home() {
               </div>
             </Card>
           ))}
-        </>)}
+        </>)
+      }
 
-      {hasError && (
-        <ErrorContainer>
-          <img src={sad} alt='sad' />
-          <div className='details'>
-            <strong>Ocorreu um erro ao obter os seus contatos!</strong>
-            <Button type='button' onClick={handleTryAgain}>
-              Tentar novamente
-            </Button>
-          </div>
-        </ErrorContainer>)}
+      {
+        hasError && (
+          <ErrorContainer>
+            <img src={sad} alt='sad' />
+            <div className='details'>
+              <strong>Ocorreu um erro ao obter os seus contatos!</strong>
+              <Button type='button' onClick={handleTryAgain}>
+                Tentar novamente
+              </Button>
+            </div>
+          </ErrorContainer>)
+      }
 
 
-    </Container>);
+    </Container >);
 }
 
