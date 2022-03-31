@@ -3,13 +3,15 @@ import {
   Header,
   ListHeader,
   Card,
-  ErrorContainer
+  ErrorContainer,
+  EmptyListContainer
 } from './style';
 import { InputSearchContainer } from './style';
 import arrow from '../../assets/images/icons/arrow.svg';
 import edit from '../../assets/images/icons/edit.svg';
 import trash from '../../assets/images/icons/trash.svg';
 import sad from '../../assets/images/icons/sad.svg'
+import emptyBox from '../../assets/images/icons/empty-box.svg'
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useMemo, useCallback } from 'react';
 // import Moldal from '../../components/Modal';
@@ -72,52 +74,74 @@ export default function Home() {
     <Container>
       <Loader isLoading={isLoading} />
       {/* <Moldal danger /> */}
-      <InputSearchContainer>
-        <input type="text"
-          value={searchTerm}
-          placeholder="Pesquise pelo Campeonato..."
-          onChange={handleChangeSearchTerm} />
-      </InputSearchContainer>
-      <Header hasError={hasError}>
+      {contacts.length > 0 &&
+        <InputSearchContainer>
+          <input type="text"
+            value={searchTerm}
+            placeholder="Pesquise pelo Campeonato..."
+            onChange={handleChangeSearchTerm} />
+        </InputSearchContainer>}
 
-        {!hasError && <strong>
-          {filteredContacts.length}
-          {filteredContacts.length == 1 ? ' Campeonato' : ' Campeonatos'}
-        </strong>}
+      <Header
+        justifyContent={hasError
+          ? 'flex-end'
+          : (
+            contacts.length > 0
+              ? 'space-between'
+              : 'center'
+          )}
+      >
+        {(!hasError && contacts.length > 0) ?
+          <strong>
+            {filteredContacts.length}
+            {filteredContacts.length == 1 ? ' Campeonato' : ' Campeonatos'}
+          </strong>
+          : null}
         <Link to="/new">Novo Campeonato</Link>
       </Header>
 
 
-      {!hasError && (<>
-        {filteredContacts.length > 0 && (
-          <ListHeader orderBy={orderBy}>
-            <button type="button" className="sort-button" onClick={handleToggleOrderBy}>
-              <span>Nome</span>
-              <img src={arrow} alt="arrow" />
-            </button>
-          </ListHeader>)}
-
-        {filteredContacts.map((contact) => (
-          <Card key={contact.id}>
-            <div className="info">
-              <div className="contact-name">
-                <strong>{contact.name}</strong>
-                {contact.category_name && <small>{contact.category_name}</small>}
-              </div>
-              <span>{contact.email}</span>
-              <span>{contact.phone}</span>
-            </div>
-            <div className="actions">
-              <Link to={`/edit/${contact.id}`}>
-                <img src={edit} alt="Edit" />
-              </Link>
-              <button type="button">
-                <img src={trash} alt="Trash" />
+      {!hasError && (
+        <>
+          {contacts.length < 1 && !isLoading && (
+            <EmptyListContainer>
+              <img src={emptyBox} />
+              <p>
+                Você ainda não tem nenhum contato cadastrado!
+                Clique no botão <strong>”Novo contato”</strong>
+                à cima para cadastrar o seu primeiro!
+              </p>
+            </EmptyListContainer>)
+          }
+          {filteredContacts.length > 0 && (
+            <ListHeader orderBy={orderBy}>
+              <button type="button" className="sort-button" onClick={handleToggleOrderBy}>
+                <span>Nome</span>
+                <img src={arrow} alt="arrow" />
               </button>
-            </div>
-          </Card>
-        ))}
-      </>)}
+            </ListHeader>)}
+
+          {filteredContacts.map((contact) => (
+            <Card key={contact.id}>
+              <div className="info">
+                <div className="contact-name">
+                  <strong>{contact.name}</strong>
+                  {contact.category_name && <small>{contact.category_name}</small>}
+                </div>
+                <span>{contact.email}</span>
+                <span>{contact.phone}</span>
+              </div>
+              <div className="actions">
+                <Link to={`/edit/${contact.id}`}>
+                  <img src={edit} alt="Edit" />
+                </Link>
+                <button type="button">
+                  <img src={trash} alt="Trash" />
+                </button>
+              </div>
+            </Card>
+          ))}
+        </>)}
 
       {hasError && (
         <ErrorContainer>
