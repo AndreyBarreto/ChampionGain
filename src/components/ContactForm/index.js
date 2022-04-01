@@ -3,23 +3,40 @@ import FormGroup from '../FormGroup'
 import Input from '../Input'
 import Select from '../Select'
 import Button from '../Button'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { isEmailValid, formatPhone } from '../../utils'
 import useErrors from '../../hooks/userErrors'
+import CategoriesService from '../../services/CategoriesService'
+
 
 export default function ContactForm({ buttonLabel }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [category, setCategory] = useState('')
+  const [categoryId, setCategoryId] = useState('')
+  const [categories, setCategories] = useState([])
 
   const { setError, removeError, getErrorMessageByFieldName, errors } = useErrors()
 
-  const isFormValid = (name && errors.length == 0)
+  const isFormValid = (name && errors.length === 0)
+
+
+  useEffect(() => {
+    async function loadCategories() {
+      const categoriesList = await CategoriesService.listCategories()
+      setCategories(categoriesList)
+
+    }
+
+
+    loadCategories()
+
+  }, [])
+
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log({ name, email, phone: phone.replace(/\D/g, ""), category })
+    console.log({ name, email, phone: phone.replace(/\D/g, ""), categoryId })
   }
 
   function handleNameChange(event) {
@@ -48,6 +65,7 @@ export default function ContactForm({ buttonLabel }) {
     setPhone(formatPhone(event.target.value))
   }
 
+
   return (
     <Form onSubmit={handleSubmit} noValidate>
       <FormGroup error={getErrorMessageByFieldName('name')}>
@@ -75,11 +93,12 @@ export default function ContactForm({ buttonLabel }) {
       </FormGroup>
       <FormGroup>
         <Select
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}>
-          <option value="">Categoria</option>
-          <option value="instagram">Instagram</option>
-          <option value="discord">Discord</option>
+          value={categoryId}
+          onChange={(event) => setCategoryId(event.target.value)}>
+          <option value="">Sem Categoria</option>
+          {categories.map(({ id, name }) => (
+            <option key={id} value={id}>{name}</option>
+          ))}
         </Select>
       </FormGroup>
 
@@ -88,6 +107,6 @@ export default function ContactForm({ buttonLabel }) {
           {buttonLabel}
         </Button>
       </ButtonContainer>
-    </Form>
+    </Form >
   )
 }
